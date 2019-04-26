@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use ILLuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Console\Command;
 use GuzzleHttp\Client;
 
@@ -45,7 +45,14 @@ class HotelSearch extends Command
         $start = 1;
         while($start<=$hotel_number)
         {
-	    $hotel_serch = $this->hotelSearch($start);
+	    $hotel_search = $this->hotelSearch($start);
+            $hotel_info = $hotel_search['Hotel'];
+            foreach($hotel_info as $info)
+            {
+                var_dump($info);
+                exit;
+            }
+exit;
             $this->insertHotelsInfo($hotel_serch);
             $start += 100;
         }
@@ -77,4 +84,10 @@ class HotelSearch extends Command
         return $hotel_info;
     }
 
+    public function insertHotelsInfo($hotel_info)
+    {
+        $users = DB::table('users')->get();
+        var_dump($users);
+exit;
+    }
 }
